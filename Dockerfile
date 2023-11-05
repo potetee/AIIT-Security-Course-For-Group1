@@ -1,0 +1,1 @@
+FROM neszt/cppcheck-docker:latest
