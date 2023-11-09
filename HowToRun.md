@@ -1,4 +1,12 @@
-# Dockerfileを実行してイメージをダウンロードしてくる
+
+## cppcheck
+#### Dockerfileを実行してイメージをダウンロードしてくる
 docker build -t cppcheck .
-# ダウンロード後、下記のコマンドでコンテナを起動する
+#### ダウンロード後、下記のコマンドでコンテナを起動する
 docker run -v $(pwd):/src cppcheck
+
+## flawfinder
+```
+pip install flawfinder
+flawfinder src/*.c
+```
