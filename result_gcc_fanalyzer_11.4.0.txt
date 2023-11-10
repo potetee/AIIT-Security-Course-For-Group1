@@ -1,0 +1,121 @@
+# gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04) 
+
+# seiji@s01:~/shared/shared/AIIT-Security-Course-For-Group1/src$ sudo gcc 00_zero_divide.c -fanalyzer
+<no-result>
+
+# seiji@s01:~/shared/shared/AIIT-Security-Course-For-Group1/src$ sudo gcc 01_ARR01_size.c -fanalyzer
+01_ARR01_size.c: In function ‘clear’:
+01_ARR01_size.c:4:3: warning: implicit declaration of function ‘memset’ [-Wimplicit-function-declaration]
+    4 |   memset(a, 0, sizeof(a)); /* 間違い */
+      |   ^~~~~~
+01_ARR01_size.c:1:1: note: include ‘<string.h>’ or provide a declaration of ‘memset’
+  +++ |+#include <string.h>
+    1 | enum {ARR_LEN = 100};
+01_ARR01_size.c:4:3: warning: incompatible implicit declaration of built-in function ‘memset’ [-Wbuiltin-declaration-mismatch]
+    4 |   memset(a, 0, sizeof(a)); /* 間違い */
+      |   ^~~~~~
+01_ARR01_size.c:4:3: note: include ‘<string.h>’ or provide a declaration of ‘memset’
+01_ARR01_size.c:4:22: warning: ‘sizeof’ on array function parameter ‘a’ will return size of ‘int *’ [-Wsizeof-array-argument]
+    4 |   memset(a, 0, sizeof(a)); /* 間違い */
+      |                      ^
+01_ARR01_size.c:3:16: note: declared here
+    3 | void clear(int a[ARR_LEN]) {
+      |            ~~~~^~~~~~~~~~
+01_ARR01_size.c: In function ‘main’:
+01_ARR01_size.c:10:3: warning: implicit declaration of function ‘assert’ [-Wimplicit-function-declaration]
+   10 |   assert(b[ARR_LEN / 2]==0); /* おそらく失敗 */
+      |   ^~~~~~
+01_ARR01_size.c:1:1: note: ‘assert’ is defined in header ‘<assert.h>’; did you forget to ‘#include <assert.h>’?
+  +++ |+#include <assert.h>
+    1 | enum {ARR_LEN = 100};
+/usr/bin/ld: /tmp/ccaiCosd.o: in function `main':
+01_ARR01_size.c:(.text+0x5c): undefined reference to `assert'
+collect2: error: ld returned 1 exit status
+
+# seiji@s01:~/shared/shared/AIIT-Security-Course-For-Group1/src$ sudo gcc 02_MEM11_inf_heap.c -fanalyzer
+02_MEM11_inf_heap.c: In function ‘main’:
+02_MEM11_inf_heap.c:31:23: warning: dereference of possibly-NULL ‘new_entry’ [CWE-690] [-Wanalyzer-possible-null-dereference]
+   31 |       new_entry->next = names;
+      |       ~~~~~~~~~~~~~~~~^~~~~~~
+  ‘main’: events 1-2
+    |
+    |   26 |       namelist_t new_entry = (namelist_t) malloc(sizeof( struct namelist_s));
+    |      |                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    |      |                                           |
+    |      |                                           (1) this call could return NULL
+    |......
+    |   31 |       new_entry->next = names;
+    |      |       ~~~~~~~~~~~~~~~~~~~~~~~              
+    |      |                       |
+    |      |                       (2) ‘new_entry’ could be NULL: unchecked value from (1)
+
+
+# seiji@s01:~/shared/shared/AIIT-Security-Course-For-Group1/src$ sudo gcc 03_MEM30_uaf.c -fanalyzer
+03_MEM30_uaf.c: In function ‘main’:
+03_MEM30_uaf.c:4:18: warning: implicit declaration of function ‘malloc’ [-Wimplicit-function-declaration]
+    4 |   buff = (char *)malloc(BUFFERSIZE);
+      |                  ^~~~~~
+03_MEM30_uaf.c:1:1: note: include ‘<stdlib.h>’ or provide a declaration of ‘malloc’
+  +++ |+#include <stdlib.h>
+    1 | int main(int argc, const char *argv[]) {
+03_MEM30_uaf.c:4:18: warning: incompatible implicit declaration of built-in function ‘malloc’ [-Wbuiltin-declaration-mismatch]
+    4 |   buff = (char *)malloc(BUFFERSIZE);
+      |                  ^~~~~~
+03_MEM30_uaf.c:4:18: note: include ‘<stdlib.h>’ or provide a declaration of ‘malloc’
+03_MEM30_uaf.c:4:25: error: ‘BUFFERSIZE’ undeclared (first use in this function)
+    4 |   buff = (char *)malloc(BUFFERSIZE);
+      |                         ^~~~~~~~~~
+03_MEM30_uaf.c:4:25: note: each undeclared identifier is reported only once for each function it appears in
+03_MEM30_uaf.c:9:3: warning: implicit declaration of function ‘free’ [-Wimplicit-function-declaration]
+    9 |   free(buff);
+      |   ^~~~
+03_MEM30_uaf.c:9:3: note: include ‘<stdlib.h>’ or provide a declaration of ‘free’
+03_MEM30_uaf.c:9:3: warning: incompatible implicit declaration of built-in function ‘free’ [-Wbuiltin-declaration-mismatch]
+03_MEM30_uaf.c:9:3: note: include ‘<stdlib.h>’ or provide a declaration of ‘free’
+03_MEM30_uaf.c:11:3: warning: implicit declaration of function ‘strncpy’ [-Wimplicit-function-declaration]
+   11 |   strncpy(buff, argv[1], BUFFERSIZE-1);
+      |   ^~~~~~~
+03_MEM30_uaf.c:1:1: note: include ‘<string.h>’ or provide a declaration of ‘strncpy’
+  +++ |+#include <string.h>
+    1 | int main(int argc, const char *argv[]) {
+03_MEM30_uaf.c:11:3: warning: incompatible implicit declaration of built-in function ‘strncpy’ [-Wbuiltin-declaration-mismatch]
+   11 |   strncpy(buff, argv[1], BUFFERSIZE-1);
+      |   ^~~~~~~
+03_MEM30_uaf.c:11:3: note: include ‘<string.h>’ or provide a declaration of ‘strncpy’
+
+# seiji@s01:~/shared/shared/AIIT-Security-Course-For-Group1/src$ sudo gcc 04_FIO03_open_args.c -fanalyzer
+04_FIO03_open_args.c: In function ‘main’:
+04_FIO03_open_args.c:3:3: error: unknown type name ‘FILE’
+    3 |   FILE *fp;
+      |   ^~~~
+04_FIO03_open_args.c:1:1: note: ‘FILE’ is defined in header ‘<stdio.h>’; did you forget to ‘#include <stdio.h>’?
+  +++ |+#include <stdio.h>
+    1 | void main() {
+04_FIO03_open_args.c:7:8: warning: implicit declaration of function ‘fopen’ [-Wimplicit-function-declaration]
+    7 |   fp = fopen(file_name, "w");
+      |        ^~~~~
+04_FIO03_open_args.c:7:8: note: ‘fopen’ is defined in header ‘<stdio.h>’; did you forget to ‘#include <stdio.h>’?
+04_FIO03_open_args.c:7:6: warning: assignment to ‘int *’ from ‘int’ makes pointer from integer without a cast [-Wint-conversion]
+    7 |   fp = fopen(file_name, "w");
+      |      ^
+
+# seiji@s01:~/shared/shared/AIIT-Security-Course-For-Group1/src$ sudo gcc 05_ENV30_env.c -fanalyzer
+05_ENV30_env.c: In function ‘main’:
+05_ENV30_env.c:11:15: warning: implicit declaration of function ‘getenv’ [-Wimplicit-function-declaration]
+   11 |   char *env = getenv("TEST_ENV");
+      |               ^~~~~~
+05_ENV30_env.c:11:15: warning: initialization of ‘char *’ from ‘int’ makes pointer from integer without a cast [-Wint-conversion]
+05_ENV30_env.c:12:14: error: ‘NULL’ undeclared (first use in this function)
+   12 |   if (env == NULL) {
+      |              ^~~~
+05_ENV30_env.c:1:1: note: ‘NULL’ is defined in header ‘<stddef.h>’; did you forget to ‘#include <stddef.h>’?
+  +++ |+#include <stddef.h>
+    1 | void trstr(char *str, char orig, char rep) {
+05_ENV30_env.c:12:14: note: each undeclared identifier is reported only once for each function it appears in
+   12 |   if (env == NULL) {
+
+# seiji@s01:~/shared/shared/AIIT-Security-Course-For-Group1/src$ sudo gcc 06_STR32_string_null.c -fanalyzer
+/usr/bin/ld: /usr/lib/gcc/aarch64-linux-gnu/11/../../../aarch64-linux-gnu/Scrt1.o: in function `_start':
+(.text+0x1c): undefined reference to `main'
+/usr/bin/ld: (.text+0x20): undefined reference to `main'
+collect2: error: ld returned 1 exit status
