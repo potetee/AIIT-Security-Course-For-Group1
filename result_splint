@@ -1,0 +1,148 @@
+yasu@YASUYUKInoMacBook-Air DockerCppcheck % docker run --rm -v $(pwd):/code splint-image splint /code/src/00_zero_divide.c
+Splint 3.1.2 --- 20 Feb 2018
+
+Finished checking --- no warnings
+yasu@YASUYUKInoMacBook-Air DockerCppcheck % docker run --rm -v $(pwd):/code splint-image splint /code/src/01_ARR01_size.c
+Splint 3.1.2 --- 20 Feb 2018
+
+src/01_ARR01_size.c: (in function clear)
+src/01_ARR01_size.c:4:22: Parameter to sizeof is an array-type function
+                             parameter: sizeof((a))
+  Operand of a sizeof operator is a function parameter declared as an array.
+  The value of sizeof will be the size of a pointer to the element type, not
+  the number of elements in the array. (Use -sizeofformalarray to inhibit
+  warning)
+src/01_ARR01_size.c: (in function main)
+src/01_ARR01_size.c:9:9: Passed storage b not completely defined (*b is
+                            undefined): clear (b)
+  Storage derivable from a parameter, return value or global is not defined.
+  Use /*@out@*/ to denote passed or returned storage which need not be defined.
+  (Use -compdef to inhibit warning)
+src/01_ARR01_size.c:3:6: Function exported but not used outside 01_ARR01_size:
+                            clear
+  A declaration is exported, but not used outside this module. Declaration can
+  use static qualifier. (Use -exportlocal to inhibit warning)
+   src/01_ARR01_size.c:5:1: Definition of clear
+
+Finished checking --- 3 code warnings
+yasu@YASUYUKInoMacBook-Air DockerCppcheck % docker run --rm -v $(pwd):/code splint-image splint /code/src/02_MEM11_inf_heap.c
+Splint 3.1.2 --- 20 Feb 2018
+
+src/02_MEM11_inf_heap.c: (in function main)
+src/02_MEM11_inf_heap.c:19:5: Return value (type int) ignored:
+                                 puts("To quit, e...
+  Result returned by function call is not used. If this is intended, can cast
+  result to (void) to eliminate message. (Use -retvalint to inhibit warning)
+src/02_MEM11_inf_heap.c:20:5: Return value (type int) ignored:
+                                 puts("Enter reco...
+src/02_MEM11_inf_heap.c:21:5: Return value (type char *) ignored:
+                                 fgets(new_name, ...
+  Result returned by function call is not used. If this is intended, can cast
+  result to (void) to eliminate message. (Use -retvalother to inhibit warning)
+src/02_MEM11_inf_heap.c:24:24: Variable i initialized to type arbitrary
+    unsigned integral type, expects unsigned int: strlen(new_name) - 1
+  To ignore type qualifiers in type comparisons use +ignorequals.
+src/02_MEM11_inf_heap.c:30:24: Arrow access from possibly null pointer
+                                  new_entry: new_entry->name
+  A possibly null pointer is dereferenced.  Value is either the result of a
+  function which may return null (in which case, code should check it is not
+  null), or a global, parameter or structure field declared with the null
+  qualifier. (Use -nullderef to inhibit warning)
+   src/02_MEM11_inf_heap.c:26:30: Storage new_entry may become null
+src/02_MEM11_inf_heap.c:34:5: Return value (type int) ignored: puts(new_name)
+Finished checking --- 6 code warnings
+
+yasu@YASUYUKInoMacBook-Air DockerCppcheck % docker run --rm -v $(pwd):/code splint-image splint /code/src/03_MEM30_uaf.c
+Splint 3.1.2 --- 20 Feb 2018
+
+src/03_MEM30_uaf.c: (in function main)
+src/03_MEM30_uaf.c:4:25: Unrecognized identifier: BUFFERSIZE
+  Identifier used in code has not been declared. (Use -unrecog to inhibit
+  warning)
+src/03_MEM30_uaf.c:11:11: Dead storage buff passed as out parameter to strncpy:
+                             buff
+  Memory is used after it has been released (either by passing as an only param
+  or assigning to an only global). (Use -usereleased to inhibit warning)
+   src/03_MEM30_uaf.c:9:8: Storage buff released
+src/03_MEM30_uaf.c:11:11: Possibly null storage buff passed as non-null param:
+                             strncpy (buff, ...)
+  A possibly null pointer is passed as a parameter corresponding to a formal
+  parameter with no /*@null@*/ annotation.  If NULL may be used for this
+  parameter, add a /*@null@*/ annotation to the function parameter declaration.
+  (Use -nullpass to inhibit warning)
+   src/03_MEM30_uaf.c:4:10: Storage buff may become null
+src/03_MEM30_uaf.c:12:2: Path with no return in function declared to return int
+  There is a path through a function declared to return a value on which there
+  is no return statement. This means the execution may fall through without
+  returning a meaningful result to the caller. (Use -noret to inhibit warning)
+src/03_MEM30_uaf.c:1:14: Parameter argc not used
+  A function parameter is not used in the body of the function. If the argument
+  is needed for type compatibility or future plans, use /*@unused@*/ in the
+  argument declaration. (Use -paramuse to inhibit warning)
+
+Finished checking --- 5 code warnings
+yasu@YASUYUKInoMacBook-Air DockerCppcheck % docker run --rm -v $(pwd):/code splint-image splint /code/src/04_FIO03_open_args.c
+Splint 3.1.2 --- 20 Feb 2018
+
+src/04_FIO03_open_args.c:1:6: Function main declared to return void, should
+                                 return int
+  The function main does not match the expected type. (Use -maintype to inhibit
+  warning)
+src/04_FIO03_open_args.c: (in function main)
+src/04_FIO03_open_args.c:7:14: Variable file_name used before definition
+  An rvalue is used that may not be initialized to a value on some execution
+  path. (Use -usedef to inhibit warning)
+Finished checking --- 2 code warnings
+
+yasu@YASUYUKInoMacBook-Air DockerCppcheck % docker run --rm -v $(pwd):/code splint-image splint /code/src/05_ENV30_env.c
+Splint 3.1.2 --- 20 Feb 2018
+
+src/05_ENV30_env.c:10:6: Function main declared to return void, should return
+                            int
+  The function main does not match the expected type. (Use -maintype to inhibit
+  warning)
+src/05_ENV30_env.c: (in function main)
+src/05_ENV30_env.c:16:9: Possibly null storage env passed as non-null param:
+                            trstr (env, ...)
+  A possibly null pointer is passed as a parameter corresponding to a formal
+  parameter with no /*@null@*/ annotation.  If NULL may be used for this
+  parameter, add a /*@null@*/ annotation to the function parameter declaration.
+  (Use -nullpass to inhibit warning)
+   src/05_ENV30_env.c:11:15: Storage env may become null
+Finished checking --- 3 code warnings
+src/05_ENV30_env.c:1:6: Function exported but not used outside 05_ENV30_env:
+                           trstr
+  A declaration is exported, but not used outside this module. Declaration can
+  use static qualifier. (Use -exportlocal to inhibit warning)
+   src/05_ENV30_env.c:8:1: Definition of trstr
+
+yasu@YASUYUKInoMacBook-Air DockerCppcheck % docker run --rm -v $(pwd):/code splint-image splint /code/src/06_STR32_string_null.c
+Splint 3.1.2 --- 20 Feb 2018
+
+src/06_STR32_string_null.c:4:20: Global cur_msg initialized to null value:
+                                    cur_msg = NULL
+  A reference with no null annotation is assigned or initialized to NULL.  Use
+  /*@null@*/ to declare the reference as a possibly null pointer. (Use
+  -nullassign to inhibit warning)
+src/06_STR32_string_null.c:4:20: Global cur_msg initialized to null value:
+                                    wchar_t * cur_msg = NULL = NULL
+src/06_STR32_string_null.c: (in function lessen_memory_usage)
+src/06_STR32_string_null.c:16:20: Unqualified storage cur_msg passed as only
+                                     param: realloc (cur_msg, ...)
+  Unqualified storage is transferred in an inconsistent way. (Use
+  -unqualifiedtrans to inhibit warning)
+src/06_STR32_string_null.c:26:2: Function returns with non-null global cur_msg
+                                    referencing null storage
+  A global variable does not satisfy its annotations when control is
+  transferred. (Use -globstate to inhibit warning)
+src/06_STR32_string_null.c:4:10: Variable exported but not used outside
+                                    06_STR32_string_null: cur_msg
+  A declaration is exported, but not used outside this module. Declaration can
+  use static qualifier. (Use -exportlocal to inhibit warning)
+src/06_STR32_string_null.c:5:8: Variable exported but not used outside
+                                   06_STR32_string_null: cur_msg_size
+src/06_STR32_string_null.c:6:8: Variable exported but not used outside
+                                   06_STR32_string_null: cur_msg_len
+
+Finished checking --- 7 code warnings
+yasu@YASUYUKInoMacBook-Air DockerCppcheck %
