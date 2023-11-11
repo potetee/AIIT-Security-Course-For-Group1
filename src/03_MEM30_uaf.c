@@ -1,3 +1,8 @@
+#include <stdlib.h>
+#include <string.h>
+
+const size_t BUFFERSIZE = sizeof(int) * 10;
+
 int main(int argc, const char *argv[]) {
   char *buff;
 
