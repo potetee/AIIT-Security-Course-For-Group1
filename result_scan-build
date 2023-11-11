@@ -1,0 +1,69 @@
+almite-5% ../checker-279/bin/scan-build gcc ./src/00_zero_divide.c 
+scan-build: Using '/Users/pede/securityProgramming2023_3Q/checker-279/bin/clang' for static analysis
+./src/00_zero_divide.c:9:11: warning: Division by zero
+    z = x / y;
+        ~~^~~
+1 warning generated.
+scan-build: 1 bug found.
+scan-build: Run 'scan-view /var/folders/05/_tjrj2sx1t11wc1c6n_934p40000gs/T/scan-build-2023-11-11-193501-50046-1' to examine bug reports.
+almite-5% ../checker-279/bin/scan-build gcc ./src/01_ARR01_size.c 
+scan-build: Using '/Users/pede/securityProgramming2023_3Q/checker-279/bin/clang' for static analysis
+./src/01_ARR01_size.c:7:22: warning: sizeof on array function parameter will return size of 'int *' instead of 'int[100]' [-Wsizeof-array-argument]
+  memset(a, 0, sizeof(a)); /* 間違い */
+                     ^
+./src/01_ARR01_size.c:6:16: note: declared here
+void clear(int a[ARR_LEN]) {
+               ^
+./src/01_ARR01_size.c:7:23: warning: 'memset' call operates on objects of type 'int' while the size is based on a different type 'int *' [-Wsizeof-pointer-memaccess]
+  memset(a, 0, sizeof(a)); /* 間違い */
+         ~            ^
+./src/01_ARR01_size.c:7:23: note: did you mean to dereference the argument to 'sizeof' (and multiply it by the number of elements)?
+  memset(a, 0, sizeof(a)); /* 間違い */
+                      ^
+2 warnings generated.
+scan-build: Removing directory '/var/folders/05/_tjrj2sx1t11wc1c6n_934p40000gs/T/scan-build-2023-11-11-193512-50063-1' because it contains no reports.
+scan-build: No bugs found.
+almite-5% ../checker-279/bin/scan-build gcc ./src/02_MEM11_inf_heap.c 
+scan-build: Using '/Users/pede/securityProgramming2023_3Q/checker-279/bin/clang' for static analysis
+./src/02_MEM11_inf_heap.c:31:23: warning: Access to field 'next' results in a dereference of a null pointer (loaded from variable 'new_entry')
+      new_entry->next = names;
+      ~~~~~~~~~       ^
+./src/02_MEM11_inf_heap.c:37:10: warning: Potential leak of memory pointed to by 'names'
+  return 0;
+         ^
+2 warnings generated.
+scan-build: 2 bugs found.
+scan-build: Run 'scan-view /var/folders/05/_tjrj2sx1t11wc1c6n_934p40000gs/T/scan-build-2023-11-11-193530-50079-1' to examine bug reports.
+almite-5% ../checker-279/bin/scan-build gcc ./src/03_MEM30_uaf.c     
+scan-build: Using '/Users/pede/securityProgramming2023_3Q/checker-279/bin/clang' for static analysis
+./src/03_MEM30_uaf.c:16:3: warning: Null pointer argument in call to string copy function
+  strncpy(buff, argv[1], BUFFERSIZE-1);
+  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/include/secure/_string.h:128:3: note: expanded from macro 'strncpy'
+                __builtin___strncpy_chk (dest, __VA_ARGS__, __darwin_obsz (dest))
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./src/03_MEM30_uaf.c:16:3: warning: Use of memory after it is freed
+  strncpy(buff, argv[1], BUFFERSIZE-1);
+  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/include/secure/_string.h:128:3: note: expanded from macro 'strncpy'
+                __builtin___strncpy_chk (dest, __VA_ARGS__, __darwin_obsz (dest))
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2 warnings generated.
+scan-build: 2 bugs found.
+scan-build: Run 'scan-view /var/folders/05/_tjrj2sx1t11wc1c6n_934p40000gs/T/scan-build-2023-11-11-193539-50090-1' to examine bug reports.
+almite-5% ../checker-279/bin/scan-build gcc ./src/04_FIO03_open_args.c 
+scan-build: Using '/Users/pede/securityProgramming2023_3Q/checker-279/bin/clang' for static analysis
+./src/04_FIO03_open_args.c:9:8: warning: Function call argument is an uninitialized value
+  fp = fopen(file_name, "w");
+       ^~~~~~~~~~~~~~~~~~~~~
+1 warning generated.
+scan-build: 1 bug found.
+scan-build: Run 'scan-view /var/folders/05/_tjrj2sx1t11wc1c6n_934p40000gs/T/scan-build-2023-11-11-193544-50101-1' to examine bug reports.
+almite-5% ../checker-279/bin/scan-build gcc ./src/05_ENV30_env.c      
+scan-build: Using '/Users/pede/securityProgramming2023_3Q/checker-279/bin/clang' for static analysis
+scan-build: Removing directory '/var/folders/05/_tjrj2sx1t11wc1c6n_934p40000gs/T/scan-build-2023-11-11-193550-50113-1' because it contains no reports.
+scan-build: No bugs found.
+almite-5% ../checker-279/bin/scan-build gcc ./src/06_STR32_string_null.c 
+scan-build: Using '/Users/pede/securityProgramming2023_3Q/checker-279/bin/clang' for static analysis
+scan-build: Removing directory '/var/folders/05/_tjrj2sx1t11wc1c6n_934p40000gs/T/scan-build-2023-11-11-193555-50126-1' because it contains no reports.
+scan-build: No bugs found.
