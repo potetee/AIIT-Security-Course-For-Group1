@@ -1,0 +1,99 @@
+[1msrc/00_zero_divide.c:1:0: [31minformation:[39m Include file: <stdio.h> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem][0m
+#include <stdio.h>
+^
+[1msrc/00_zero_divide.c:9:11: [31merror:[39m Division by zero. [zerodiv][0m
+    z = x / y;
+          ^
+[1msrc/00_zero_divide.c:5:13: [2mnote:[0m Assignment 'y=0', assigned value is 0
+    int y = 0;
+            ^
+[1msrc/00_zero_divide.c:9:11: [2mnote:[0m Division by zero
+    z = x / y;
+          ^
+[1msrc/01_ARR01_size.c:4:16: [31mwarning:[39m Using 'sizeof' on array given as function argument returns size of a pointer. [sizeofwithsilentarraypointer][0m
+  memset(a, 0, sizeof(a)); /* 間違い */
+               ^
+[1msrc/02_MEM11_inf_heap.c:1:0: [31minformation:[39m Include file: <stdio.h> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem][0m
+#include <stdio.h>
+^
+[1msrc/02_MEM11_inf_heap.c:2:0: [31minformation:[39m Include file: <string.h> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem][0m
+#include <string.h>
+^
+[1msrc/02_MEM11_inf_heap.c:3:0: [31minformation:[39m Include file: <stdlib.h> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem][0m
+#include <stdlib.h>
+^
+[1msrc/02_MEM11_inf_heap.c:30:15: [31mwarning:[39m Either the condition 'new_entry==NULL' is redundant or there is possible null pointer dereference: new_entry. [nullPointerRedundantCheck][0m
+      strcpy( new_entry->name, new_name);
+              ^
+[1msrc/02_MEM11_inf_heap.c:27:21: [2mnote:[0m Assuming that condition 'new_entry==NULL' is not redundant
+      if (new_entry == NULL) {
+                    ^
+[1msrc/02_MEM11_inf_heap.c:30:15: [2mnote:[0m Null pointer dereference
+      strcpy( new_entry->name, new_name);
+              ^
+[1msrc/02_MEM11_inf_heap.c:31:7: [31mwarning:[39m Either the condition 'new_entry==NULL' is redundant or there is possible null pointer dereference: new_entry. [nullPointerRedundantCheck][0m
+      new_entry->next = names;
+      ^
+[1msrc/02_MEM11_inf_heap.c:27:21: [2mnote:[0m Assuming that condition 'new_entry==NULL' is not redundant
+      if (new_entry == NULL) {
+                    ^
+[1msrc/02_MEM11_inf_heap.c:31:7: [2mnote:[0m Null pointer dereference
+      new_entry->next = names;
+      ^
+[1msrc/04_FIO03_open_args.c:11:1: [31merror:[39m Resource leak: fp [resourceLeak][0m
+}
+^
+[1msrc/04_FIO03_open_args.c:2:9: [31mstyle:[39m Variable 'file_name' can be declared as pointer to const [constVariablePointer][0m
+  char *file_name;
+        ^
+[1msrc/04_FIO03_open_args.c:7:14: [31merror:[39m Uninitialized variable: file_name [uninitvar][0m
+  fp = fopen(file_name, "w");
+             ^
+[1msrc/05_ENV30_env.c:2:11: [31mwarning:[39m Either the condition 'env==NULL' is redundant or there is possible null pointer dereference: str. [nullPointerRedundantCheck][0m
+  while (*str != '\0') {
+          ^
+[1msrc/05_ENV30_env.c:12:11: [2mnote:[0m Assuming that condition 'env==NULL' is not redundant
+  if (env == NULL) {
+          ^
+[1msrc/05_ENV30_env.c:16:9: [2mnote:[0m Calling function 'trstr', 1st argument 'env' value is 0
+  trstr(env,'"', '_');
+        ^
+[1msrc/05_ENV30_env.c:2:11: [2mnote:[0m Null pointer dereference
+  while (*str != '\0') {
+          ^
+[1msrc/06_STR32_string_null.c:1:0: [31minformation:[39m Include file: <stdlib.h> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem][0m
+#include <stdlib.h>
+^
+[1msrc/06_STR32_string_null.c:2:0: [31minformation:[39m Include file: <wchar.h> not found. Please note: Cppcheck does not need standard library headers to get proper results. [missingIncludeSystem][0m
+#include <wchar.h>
+^
+[1msrc/06_STR32_string_null.c:24:26: [31mwarning:[39m Either the condition 'temp==NULL' is redundant or there is possible null pointer dereference: cur_msg. [nullPointerRedundantCheck][0m
+    cur_msg_len = wcslen(cur_msg);
+                         ^
+[1msrc/06_STR32_string_null.c:18:14: [2mnote:[0m Assuming that condition 'temp==NULL' is not redundant
+    if (temp == NULL) {
+             ^
+[1msrc/06_STR32_string_null.c:22:15: [2mnote:[0m Assignment 'cur_msg=temp', assigned value is 0
+    cur_msg = temp;
+              ^
+[1msrc/06_STR32_string_null.c:24:26: [2mnote:[0m Null pointer dereference
+    cur_msg_len = wcslen(cur_msg);
+                         ^
+[1msrc/06_STR32_string_null.c:10:10: [31mstyle:[39m The scope of the variable 'temp_size' can be reduced. [variableScope][0m
+  size_t temp_size;
+         ^
+[1msrc/05_ENV30_env.c:2:11: [31mwarning:[39m Null pointer dereference: str [ctunullpointer][0m
+  while (*str != '\0') {
+          ^
+[1msrc/05_ENV30_env.c:12:11: [2mnote:[0m Assuming that condition 'env==NULL' is not redundant
+
+          ^
+[1msrc/05_ENV30_env.c:16:8: [2mnote:[0m Calling function trstr, 1st argument is null
+  trstr(env,'"', '_');
+       ^
+[1msrc/05_ENV30_env.c:2:11: [2mnote:[0m Dereferencing argument str that is null
+  while (*str != '\0') {
+          ^
+[1msrc/06_STR32_string_null.c:8:0: [31mstyle:[39m The function 'lessen_memory_usage' is never used. [unusedFunction][0m
+void lessen_memory_usage(void) {
+^
