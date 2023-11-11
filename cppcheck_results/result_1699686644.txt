@@ -1,0 +1,15 @@
+[1msrc/00_zero_divide.c:9:11: [31merror:[39m Division by zero. [zerodiv][0m
+    z = x / y;
+          ^
+[1msrc/00_zero_divide.c:5:13: [2mnote:[0m Assignment 'y=0', assigned value is 0
+    int y = 0;
+            ^
+[1msrc/00_zero_divide.c:9:11: [2mnote:[0m Division by zero
+    z = x / y;
+          ^
+[1msrc/04_FIO03_open_args.c:13:3: [31merror:[39m Resource leak: fp [resourceLeak][0m
+  return 0;
+  ^
+[1msrc/04_FIO03_open_args.c:8:14: [31merror:[39m Uninitialized variable: file_name [uninitvar][0m
+  fp = fopen(file_name, "w");
+             ^
